@@ -212,8 +212,17 @@
                 cognome: $("#cognome").val().toLowerCase(),
                 nome: $("#nome").val().toLowerCase()
             },
-            success: function(response) {
-                alert(response);  // Mostra la risposta nel div con id "result"
+            success: function(data) {
+                if (data.error) {
+                    alert('<p>' + data.error + '</p>');
+                } else {
+                    var html = '<ul>';
+                    $.each(data, function(index, participant) {
+                        html += '<li>' + JSON.stringify(participant) + '</li>';
+                    });
+                    html += '</ul>';
+                    alert(html);
+                }
             },
             error: function(xhr, status, error) {
                 console.error(error);

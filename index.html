@@ -5,40 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MirkoNicoleWedding</title>
     <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-...sha384-string..." crossorigin="anonymous">
+    <style>
+        .filedRequired {
+            border-color: var(--bs-form-invalid-border-color);
+            padding-right: calc(1.5em + .75rem);
+            background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e);
+            background-repeat: no-repeat;
+            background-position: right calc(.375em + .1875rem) center;
+            background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+        }
+        .filedRequired:focus {
+            border-color: var(--bs-form-invalid-border-color);
+            box-shadow: 0 0 0 .25rem rgba(var(--bs-danger-rgb), .25);
+        }
+    </style>
 </head>
 <body>
 <div class="container mt-5">
     <form id="confPresenza">
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="email">Cognome</label>
-                    <input type="email" class="form-control" id="cognome" placeholder="Inserisci il tuo Cognome">
+                    <input type="email" class="form-control" id="cognome" placeholder="Inserisci il tuo Cognome" required>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="mb-3">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo Nome">
+                    <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo Nome" required>
                 </div>
             </div>
             <div class="col-md-12">
-                <button type="button" id="ricerca" class="btn btn-primary">Ricerca</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <div class="mb-3">
+                    <button type="button" id="ricerca" class="btn btn-primary">Ricerca</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
             </div>
+
         </div>
     </form>
     <form id="contMember">
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label for="comments">Comments</label>
+                <div class="mb-3">
+                    <label for="comments">Note Aggiuntive</label>
                     <textarea class="form-control" id="note" rows="3" placeholder="Indica se ci sono allergie o particolari richieste sul cibo"></textarea>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="mb-3">
                     <button type="button" id="Invia" class="btn btn-primary">Conferma Partecipazione</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
@@ -51,7 +68,7 @@
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-...sha384-string..." crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -114,7 +131,15 @@
 
     $(document).ready(function(){
         $("#ricerca").on("click",function(){
-            ricerca()
+            if ($("#cognome").val() != "" && $("#nome").val() != ""){
+                $("#cognome").removeClass("filedRequired") 
+                $("#nome").removeClass("filedRequired")
+                ricerca()
+            }
+            else{
+                $("#cognome").addClass("filedRequired") 
+                $("#nome").addClass("filedRequired")
+            }
         })
         $("#reset").on("click",function(){
             reset()
@@ -166,11 +191,12 @@
         $("#confPresenza").fadeOut()
 
         var htmlMemb = ''
-
+        htmlMemb += ' <div class="btn-group" role="group" aria-label="Clicca sui chi verra al nostro matrimonio😊"> '
         for(var i = 0; i < array.length; i++){
-            htmlMemb += '<input type="checkbox" id="' + family + '_' + array[i].nome + '" >'
-            htmlMemb += '<label for="' + family + '_' + array[i].nome + '">' + family + ' ' + array[i].nome + '</label>'
+            htmlMemb += '     <input type="checkbox" class="btn-check" id="' + family + '_' + array[i].nome + '" autocomplete="off"> '
+            htmlMemb += '     <label class="btn btn-outline-primary" for="' + family + '_' + array[i].nome + '">' + array[i].cognome + ' ' + array[i].nome + '</label> '
         }
+        htmlMemb += ' </div> '
         console.log(htmlMemb)
         $("#contMember").prepend(htmlMemb)
         

@@ -19,7 +19,10 @@
     $mysqli->set_charset(DB_CHARSET);
 
     // Esegui la query
-    $query = "SELECT * FROM lista_partecipanti";
+    $Cognome = $_POST['cognome'];
+    $Nome = $_POST['nome'];
+    $query = "SELECT * FROM lista_partecipanti where cognome = '" . $Cognome . "'";
+
     $result = $mysqli->query($query);
 
     // Verifica se la query ha avuto successo

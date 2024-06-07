@@ -13,14 +13,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Enter your name">
+                    <label for="email">Cognome</label>
+                    <input type="email" class="form-control" id="cognome" placeholder="Inserisci il tuo Cognome">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="email">Cognome</label>
-                    <input type="email" class="form-control" id="cognome" placeholder="Enter your email">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo Nome">
                 </div>
             </div>
             <div class="col-md-12">
@@ -30,11 +30,19 @@
         </div>
     </form>
     <form id="contMember">
-        <div class="form-group">
-            <label for="comments">Comments</label>
-            <textarea class="form-control" id="note" rows="3" placeholder="Indica se ci sono allergie o particolari richieste sul cibo"></textarea>
-            <button type="button" id="Invia" class="btn btn-primary">Conferma Partecipazione</button>
-            <button type="reset" class="btn btn-secondary">Reset</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" id="note" rows="3" placeholder="Indica se ci sono allergie o particolari richieste sul cibo"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="button" id="Invia" class="btn btn-primary">Conferma Partecipazione</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </div>
         </div>
     </form>
     
@@ -173,7 +181,7 @@
     function getMemberList(){
         $.ajax({
             url: 'getMemberlist.php',  // URL della tua pagina PHP
-            type: 'GET',
+            type: 'POST',
             data: {
                 cognome: $("#cognome").val().toLowerCase(),
                 nome: $("#nome").val().toLowerCase()

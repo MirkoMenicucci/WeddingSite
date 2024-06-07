@@ -220,6 +220,28 @@
             }
         });
     }
+
+    const jsonFilePath = 'list.json';
+
+    // Funzione per ottenere il contenuto del file JSON
+    async function fetchJson() {
+        try {
+            const response = await fetch(jsonFilePath);
+
+            // Controlla se la risposta è ok (status code 200-299)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            // Converte la risposta in formato JSON
+            const jsonData = await response.json();
+
+            // Visualizza il contenuto JSON nel DOM
+            document.getElementById('json-content').textContent = JSON.stringify(jsonData, null, 2);
+        } catch (error) {
+            console.error('Errore nel recupero del file JSON:', error);
+        }
+    }
 </script>
 </body>
 </html>

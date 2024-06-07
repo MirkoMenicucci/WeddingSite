@@ -1,0 +1,55 @@
+[
+    {
+        "family": "Prete",
+        "membri": [
+            {
+                "nome": "Simone"
+            },
+            {
+                "nome": "Lidia"
+            },
+            {
+                "nome": "Lisa"
+            }
+        ]
+    },
+    {
+        "family": "Viscito",
+        "membri": [
+            {
+                "nome": "Bruno"
+            },
+            {
+                "nome": "Riccardo"
+            },
+            {
+                "nome": "Jacopo"
+            },
+            {
+                "nome": "Anna"
+            }
+        ]
+    },
+    {
+        "family": "Menicucci",
+        "membri": [
+            {
+                "nome": "Lucas"
+            },
+            {
+                "nome": "Francesca"
+            }
+        ]
+    },
+    {
+        "family": "Menicucci",
+        "membri": [
+            {
+                "nome": "Salvatore"
+            },
+            {
+                "nome": "Stefania"
+            }
+        ]
+    }
+]

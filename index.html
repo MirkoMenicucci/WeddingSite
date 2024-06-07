@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Form</title>
+    <title>MirkoNicoleWedding</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Contact Form</h2>
     <form id="confPresenza">
         <div class="row">
             <div class="col-md-6">
@@ -63,8 +62,8 @@
                     "nome":"Lisa",
                 },
             ]
-        },
-        {
+        }
+        ,{
             "family":"Viscito",
             "membri":[
                 {
@@ -81,6 +80,28 @@
                 },
             ]
         }
+        ,{
+            "family":"Menicucci",
+            "membri":[
+                {
+                    "nome":"Lucas",
+                },
+                {
+                    "nome":"Francesca",
+                },
+            ]
+        }
+        ,{
+            "family":"Menicucci",
+            "membri":[
+                {
+                    "nome":"Salvatore",
+                },
+                {
+                    "nome":"Stefania",
+                },
+            ]
+        }
     ]
 
     $(document).ready(function(){
@@ -93,9 +114,11 @@
         $("#contMember").hide()
     })
 
-    function ricerca() {
-        $("#confPresenza").find("input").val("")
+    function reset() {
+        $("form").find("input").val("")
+        $("form").find("textarea").text("")
     }
+
     function ricerca() {
         var cognome = $("#cognome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
         var nome = $("#nome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
@@ -147,6 +170,22 @@
 
     }
 
+    function getMemberList(){
+        $.ajax({
+            url: 'getMemberlist.php',  // URL della tua pagina PHP
+            type: 'GET',
+            data: {
+                cognome: $("#cognome").val().toLowerCase(),
+                nome: $("#nome").val().toLowerCase()
+            },
+            success: function(response) {
+                alert(response);  // Mostra la risposta nel div con id "result"
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
 </body>
 </html>

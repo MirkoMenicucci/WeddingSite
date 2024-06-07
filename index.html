@@ -1,112 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
 <body>
-    
+<div class="container mt-5">
+    <h2>Contact Form</h2>
     <form id="confPresenza">
-        <input type="text" id="nome" placeholder="nome" />
-        <input type="text" id="cognome" placeholder="cognome" />
-        <button type="button" id="ricerca">Ricerca</button>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Enter your name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Cognome</label>
+                    <input type="email" class="form-control" id="cognome" placeholder="Enter your email">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="button" id="ricerca" class="btn btn-primary">Ricerca</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </div>
+        </div>
     </form>
     <form id="contMember">
-        <textarea id="note" placeholder="Indica se ci sono allergie o particolari richieste sul cibo."></textarea>
+        <div class="form-group">
+            <label for="comments">Comments</label>
+            <textarea class="form-control" id="note" rows="3" placeholder="Indica se ci sono allergie o particolari richieste sul cibo"></textarea>
+            <button type="button" id="Invia" class="btn btn-primary">Conferma Partecipazione</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
     </form>
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        var listaPartecipanti = [
-            {
-                "family":"Prete",
-                "membri":[
-                    {
-                        "nome":"Simone",
-                    },
-                    {
-                        "nome":"Lidia",
-                    },
-                    {
-                        "nome":"Lisa",
-                    },
-                ]
-            },
-            {
-                "family":"Viscito",
-                "membri":[
-                    {
-                        "nome":"Bruno",
-                    },
-                    {
-                        "nome":"Riccardo",
-                    },
-                    {
-                        "nome":"Jacopo",
-                    },
-                    {
-                        "nome":"Anna",
-                    },
-                ]
-            }
-        ]
+</div>
 
-        $(document).ready(function(){
-            $("#ricerca").on("click",function(){
-                ricerca()
-            })
-            $("#contMember").hide()
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var listaPartecipanti = [
+        {
+            "family":"Prete",
+            "membri":[
+                {
+                    "nome":"Simone",
+                },
+                {
+                    "nome":"Lidia",
+                },
+                {
+                    "nome":"Lisa",
+                },
+            ]
+        },
+        {
+            "family":"Viscito",
+            "membri":[
+                {
+                    "nome":"Bruno",
+                },
+                {
+                    "nome":"Riccardo",
+                },
+                {
+                    "nome":"Jacopo",
+                },
+                {
+                    "nome":"Anna",
+                },
+            ]
+        }
+    ]
+
+    $(document).ready(function(){
+        $("#ricerca").on("click",function(){
+            ricerca()
         })
+        $("#reset").on("click",function(){
+            reset()
+        })
+        $("#contMember").hide()
+    })
 
-        function ricerca() {
-            var cognome = $("#cognome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
-            var nome = $("#nome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
-            var matchingParticipants = [];
+    function ricerca() {
+        $("#confPresenza").find("input").val("")
+    }
+    function ricerca() {
+        var cognome = $("#cognome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
+        var nome = $("#nome").val().toLowerCase(); // Convert to lowercase for case-insensitive search
+        var matchingParticipants = [];
 
-            for (var i = 0; i < listaPartecipanti.length; i++) {
-                var currentFamily = listaPartecipanti[i];
+        for (var i = 0; i < listaPartecipanti.length; i++) {
+            var currentFamily = listaPartecipanti[i];
 
-                if (currentFamily.family.toLowerCase() === cognome) {
-                    for (var j = 0; j < currentFamily.membri.length; j++) {
-                        var currentMember = currentFamily.membri[j];
-                        matchingParticipants.push({
-                            cognome: currentFamily.family,
-                            nome: currentMember.nome
-                        });
-                    }
-                    break; // Una volta trovata la famiglia, possiamo uscire dal ciclo principale
+            if (currentFamily.family.toLowerCase() === cognome) {
+                for (var j = 0; j < currentFamily.membri.length; j++) {
+                    var currentMember = currentFamily.membri[j];
+                    matchingParticipants.push({
+                        cognome: currentFamily.family,
+                        nome: currentMember.nome
+                    });
                 }
+                break; // Una volta trovata la famiglia, possiamo uscire dal ciclo principale
             }
-
-            // Ordinare l'array in modo che il membro con il nome specificato sia al primo posto
-            matchingParticipants.sort(function(a, b) {
-                if (a.nome.toLowerCase() === nome) {
-                    return -1;
-                }
-                if (b.nome.toLowerCase() === nome) {
-                    return 1;
-                }
-                // Se nessuno dei due nomi corrisponde, ordinare alfabeticamente
-                return a.nome.toLowerCase().localeCompare(b.nome.toLowerCase());
-            });
-
-            step1(matchingParticipants,cognome)
         }
 
-        function step1(array,family){
-            $("#confPresenza").fadeOut()
-
-            var htmlMemb = ''
-
-            for(var i = 0; i < array.length; i++){
-                htmlMemb += '<input type="checkbox" id="' + family + '_' + array[i].nome + '" >'
-                htmlMemb += '<label for="' + family + '_' + array[i].nome + '">' + family + ' ' + array[i].nome + '</label>'
+        // Ordinare l'array in modo che il membro con il nome specificato sia al primo posto
+        matchingParticipants.sort(function(a, b) {
+            if (a.nome.toLowerCase() === nome) {
+                return -1;
             }
-            console.log(htmlMemb)
-            $("#contMember").prepend(htmlMemb)
-            
-            $("#contMember").fadeIn()
+            if (b.nome.toLowerCase() === nome) {
+                return 1;
+            }
+            // Se nessuno dei due nomi corrisponde, ordinare alfabeticamente
+            return a.nome.toLowerCase().localeCompare(b.nome.toLowerCase());
+        });
 
+        step1(matchingParticipants,cognome)
+    }
+
+    function step1(array,family){
+        $("#confPresenza").fadeOut()
+
+        var htmlMemb = ''
+
+        for(var i = 0; i < array.length; i++){
+            htmlMemb += '<input type="checkbox" id="' + family + '_' + array[i].nome + '" >'
+            htmlMemb += '<label for="' + family + '_' + array[i].nome + '">' + family + ' ' + array[i].nome + '</label>'
         }
+        console.log(htmlMemb)
+        $("#contMember").prepend(htmlMemb)
+        
+        $("#contMember").fadeIn()
 
-    </script>
+    }
 
+</script>
 </body>
 </html>
-
